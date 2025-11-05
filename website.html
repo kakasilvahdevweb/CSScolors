@@ -1,0 +1,496 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CSScolors - Color &amp; Gradient Generator</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Meta Tags for SEO and Social Sharing -->
+    <meta name="description" content="Generate unique solid colors and beautiful gradients with CSScolors. Copy CSS code instantly with iOS-inspired design."/>
+    <meta property="og:title" content="CSScolors - Color &amp; Gradient Generator"/>
+    <meta property="og:description" content="Generate unique solid colors and beautiful gradients with CSScolors. Copy CSS code instantly."/>
+    <meta property="og:url" content="https://www.onspace.ai"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="OnSpace.AI"/>
+    <meta property="og:image" content="https://cdn-ai.onspace.ai/onspace/project/screenshot/online/pre-site/9be7dk.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="CSScolors - Color &amp; Gradient Generator"/>
+    <meta name="twitter:description" content="Generate unique solid colors and beautiful gradients with CSScolors. Copy CSS code instantly."/>
+    <meta name="twitter:image" content="https://cdn-ai.onspace.ai/onspace/project/screenshot/online/pre-site/9be7dk.jpg"/>
+    
+    <style>
+        /* iOS System Font Stack */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Custom Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        
+        .glass-dark {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        
+        /* Smooth Transitions */
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Custom Scrollbar iOS Style */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Pulse Animation for Copy Feedback */
+        @keyframes pulse-success {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+        
+        .pulse-success {
+            animation: pulse-success 0.3s ease-in-out;
+        }
+        
+        /* Custom Gradient Preview */
+        .gradient-preview {
+            min-height: 300px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .color-preview {
+            min-height: 300px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    
+    <!-- Header Section -->
+    <header class="pt-8 pb-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-3">
+                    CSS<span class="text-blue-600">colors</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 font-medium">
+                    Generate beautiful colors &amp; gradients instantly
+                </p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Tab Navigation iOS Style -->
+            <div class="glass rounded-3xl p-2 mb-8 shadow-lg inline-flex mx-auto block w-full max-w-md">
+                <button id="solidTab" class="flex-1 py-3 px-6 rounded-2xl font-semibold text-sm transition-all bg-white text-blue-600 shadow-md">
+                    Solid Colors
+                </button>
+                <button id="gradientTab" class="flex-1 py-3 px-6 rounded-2xl font-semibold text-sm transition-all text-gray-700 hover:text-gray-900">
+                    Gradients
+                </button>
+            </div>
+            
+            <!-- Solid Color Section -->
+            <div id="solidSection" class="space-y-6">
+                
+                <!-- Color Preview Card -->
+                <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Solid Color</h2>
+                        <p class="text-gray-600">Click generate to create a unique color</p>
+                    </div>
+                    
+                    <!-- Color Display -->
+                    <div id="colorPreview" class="color-preview mb-6 flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="glass-dark rounded-2xl px-6 py-3">
+                            <p id="colorHex" class="text-white font-mono text-xl sm:text-2xl font-bold tracking-wider">#667EEA</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button id="generateColor" class="flex-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95">
+                            Generate Color
+                        </button>
+                        <button id="copyColorCode" class="flex-1 glass hover:bg-white text-gray-900 font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95">
+                            <span class="flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                Copy CSS
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <!-- CSS Code Display -->
+                    <div class="mt-6 bg-gray-900 rounded-2xl p-4 sm:p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-gray-400 text-sm font-semibold uppercase tracking-wide">CSS Code</p>
+                            <span class="glass-dark text-gray-300 text-xs px-3 py-1 rounded-full">background</span>
+                        </div>
+                        <pre class="text-green-400 font-mono text-sm sm:text-base overflow-x-auto"><code id="colorCode">background: #667EEA;</code></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Gradient Section (Hidden by default) -->
+            <div id="gradientSection" class="space-y-6 hidden">
+                
+                <!-- Gradient Preview Card -->
+                <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Gradient Generator</h2>
+                        <p class="text-gray-600">Create stunning gradient combinations</p>
+                    </div>
+                    
+                    <!-- Gradient Display -->
+                    <div id="gradientPreview" class="gradient-preview mb-6 flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="glass-dark rounded-2xl px-6 py-3">
+                            <p class="text-white font-mono text-sm sm:text-base font-bold">LINEAR GRADIENT</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Gradient Type Selector -->
+                    <div class="mb-6 glass rounded-2xl p-2 inline-flex w-full">
+                        <button id="linearGradient" class="flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all bg-white text-blue-600 shadow-md">
+                            Linear
+                        </button>
+                        <button id="radialGradient" class="flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all text-gray-700 hover:text-gray-900">
+                            Radial
+                        </button>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button id="generateGradient" class="flex-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95">
+                            Generate Gradient
+                        </button>
+                        <button id="copyGradientCode" class="flex-1 glass hover:bg-white text-gray-900 font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95">
+                            <span class="flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                Copy CSS
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <!-- CSS Code Display -->
+                    <div class="mt-6 bg-gray-900 rounded-2xl p-4 sm:p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-gray-400 text-sm font-semibold uppercase tracking-wide">CSS Code</p>
+                            <span class="glass-dark text-gray-300 text-xs px-3 py-1 rounded-full">background</span>
+                        </div>
+                        <pre class="text-green-400 font-mono text-sm sm:text-base overflow-x-auto"><code id="gradientCode">background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</code></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Toast Notification -->
+            <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glass-dark text-white px-6 py-4 rounded-2xl shadow-2xl opacity-0 pointer-events-none z-50 transition-opacity duration-300">
+                <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="font-semibold">Copied to clipboard!</span>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-600 text-sm">
+                Made with <span class="text-red-500">♥</span> by OnSpace.AI
+            </p>
+        </div>
+    </footer>
+    
+    <script>
+        // ========== STATE MANAGEMENT ==========
+        let currentGradientType = 'linear'; // 'linear' or 'radial'
+        let currentSection = 'solid'; // 'solid' or 'gradient'
+        
+        // ========== UTILITY FUNCTIONS ==========
+        
+        /**
+         * Generate a random hex color
+         */
+        function generateRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        /**
+         * Generate a random angle for gradients
+         */
+        function generateRandomAngle() {
+            const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+            return angles[Math.floor(Math.random() * angles.length)];
+        }
+        
+        /**
+         * Generate a linear gradient
+         */
+        function generateLinearGradient() {
+            const color1 = generateRandomColor();
+            const color2 = generateRandomColor();
+            const angle = generateRandomAngle();
+            
+            return {
+                css: `background: linear-gradient(${angle}deg, ${color1} 0%, ${color2} 100%);`,
+                style: `linear-gradient(${angle}deg, ${color1} 0%, ${color2} 100%)`
+            };
+        }
+        
+        /**
+         * Generate a radial gradient
+         */
+        function generateRadialGradient() {
+            const color1 = generateRandomColor();
+            const color2 = generateRandomColor();
+            const positions = ['at center', 'at top left', 'at top right', 'at bottom left', 'at bottom right'];
+            const position = positions[Math.floor(Math.random() * positions.length)];
+            
+            return {
+                css: `background: radial-gradient(circle ${position}, ${color1} 0%, ${color2} 100%);`,
+                style: `radial-gradient(circle ${position}, ${color1} 0%, ${color2} 100%)`
+            };
+        }
+        
+        /**
+         * Copy text to clipboard and show feedback
+         */
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast();
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+        
+        /**
+         * Show toast notification
+         */
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 2000);
+        }
+        
+        // ========== SOLID COLOR FUNCTIONS ==========
+        
+        /**
+         * Generate and display a new solid color
+         */
+        function generateAndDisplayColor() {
+            const color = generateRandomColor();
+            const colorPreview = document.getElementById('colorPreview');
+            const colorHex = document.getElementById('colorHex');
+            const colorCode = document.getElementById('colorCode');
+            
+            // Update preview
+            colorPreview.style.background = color;
+            colorHex.textContent = color;
+            colorCode.textContent = `background: ${color};`;
+            
+            // Add pulse animation
+            colorPreview.classList.add('pulse-success');
+            setTimeout(() => {
+                colorPreview.classList.remove('pulse-success');
+            }, 300);
+        }
+        
+        /**
+         * Copy solid color CSS code
+         */
+        function copyColorCSS() {
+            const colorCode = document.getElementById('colorCode').textContent;
+            copyToClipboard(colorCode);
+        }
+        
+        // ========== GRADIENT FUNCTIONS ==========
+        
+        /**
+         * Generate and display a new gradient
+         */
+        function generateAndDisplayGradient() {
+            let gradient;
+            
+            if (currentGradientType === 'linear') {
+                gradient = generateLinearGradient();
+            } else {
+                gradient = generateRadialGradient();
+            }
+            
+            const gradientPreview = document.getElementById('gradientPreview');
+            const gradientCode = document.getElementById('gradientCode');
+            
+            // Update preview
+            gradientPreview.style.background = gradient.style;
+            gradientCode.textContent = gradient.css;
+            
+            // Add pulse animation
+            gradientPreview.classList.add('pulse-success');
+            setTimeout(() => {
+                gradientPreview.classList.remove('pulse-success');
+            }, 300);
+        }
+        
+        /**
+         * Copy gradient CSS code
+         */
+        function copyGradientCSS() {
+            const gradientCode = document.getElementById('gradientCode').textContent;
+            copyToClipboard(gradientCode);
+        }
+        
+        /**
+         * Switch gradient type
+         */
+        function switchGradientType(type) {
+            currentGradientType = type;
+            
+            const linearBtn = document.getElementById('linearGradient');
+            const radialBtn = document.getElementById('radialGradient');
+            
+            if (type === 'linear') {
+                linearBtn.classList.add('bg-white', 'text-blue-600', 'shadow-md');
+                linearBtn.classList.remove('text-gray-700');
+                radialBtn.classList.remove('bg-white', 'text-blue-600', 'shadow-md');
+                radialBtn.classList.add('text-gray-700');
+            } else {
+                radialBtn.classList.add('bg-white', 'text-blue-600', 'shadow-md');
+                radialBtn.classList.remove('text-gray-700');
+                linearBtn.classList.remove('bg-white', 'text-blue-600', 'shadow-md');
+                linearBtn.classList.add('text-gray-700');
+            }
+            
+            // Generate new gradient with the selected type
+            generateAndDisplayGradient();
+        }
+        
+        // ========== TAB SWITCHING ==========
+        
+        /**
+         * Switch between solid and gradient sections
+         */
+        function switchSection(section) {
+            currentSection = section;
+            
+            const solidTab = document.getElementById('solidTab');
+            const gradientTab = document.getElementById('gradientTab');
+            const solidSection = document.getElementById('solidSection');
+            const gradientSection = document.getElementById('gradientSection');
+            
+            if (section === 'solid') {
+                // Update tabs
+                solidTab.classList.add('bg-white', 'text-blue-600', 'shadow-md');
+                solidTab.classList.remove('text-gray-700');
+                gradientTab.classList.remove('bg-white', 'text-blue-600', 'shadow-md');
+                gradientTab.classList.add('text-gray-700');
+                
+                // Update sections
+                solidSection.classList.remove('hidden');
+                gradientSection.classList.add('hidden');
+            } else {
+                // Update tabs
+                gradientTab.classList.add('bg-white', 'text-blue-600', 'shadow-md');
+                gradientTab.classList.remove('text-gray-700');
+                solidTab.classList.remove('bg-white', 'text-blue-600', 'shadow-md');
+                solidTab.classList.add('text-gray-700');
+                
+                // Update sections
+                gradientSection.classList.remove('hidden');
+                solidSection.classList.add('hidden');
+            }
+        }
+        
+        // ========== EVENT LISTENERS ==========
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            document.getElementById('solidTab').addEventListener('click', () => switchSection('solid'));
+            document.getElementById('gradientTab').addEventListener('click', () => switchSection('gradient'));
+            
+            // Solid color controls
+            document.getElementById('generateColor').addEventListener('click', generateAndDisplayColor);
+            document.getElementById('copyColorCode').addEventListener('click', copyColorCSS);
+            
+            // Gradient controls
+            document.getElementById('generateGradient').addEventListener('click', generateAndDisplayGradient);
+            document.getElementById('copyGradientCode').addEventListener('click', copyGradientCSS);
+            
+            // Gradient type switching
+            document.getElementById('linearGradient').addEventListener('click', () => switchGradientType('linear'));
+            document.getElementById('radialGradient').addEventListener('click', () => switchGradientType('radial'));
+            
+            // Generate initial color on load
+            generateAndDisplayColor();
+        });
+    </script>
+    
+
+</body></html>
